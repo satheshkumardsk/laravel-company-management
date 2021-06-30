@@ -15,8 +15,8 @@ class CompanyImportController extends Controller
     public function import_store(Request $request){
         $file=$request->file('file')->store('company_imports');
 
-        $import=new CompaniesImport;
-        $import->import($file);
+        // $import=new CompaniesImport;
+        // $import->import($file);
         Excel::import(new CompaniesImport,$file);
         return back()->withStatus('Import Successful');
     }

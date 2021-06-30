@@ -11,10 +11,52 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
  </head>
  <body>
+
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{route('home')}}">{{ config('app.name', 'Laravel') }}</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="{{route('employees.index')}}">Employees</a></li>
+              <li><a href="{{route('companies.index')}}">Companies</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{route('home')}}">Home</a></li>
+              <li>  <a class="dropdown-item" href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+               {{ __('Logout') }}
+           </a></li>
+
+           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+               @csrf
+           </form>
+            </ul>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+
+
   <div class="container">
-     <br />
-     <h3 align="center">Manage Employee Data</h3>
-     <br />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Manage Employee Data</h3>
+        </div>
+      </div>
 
 
      <form action="{{route('employees_data.export')}}" method="GET" enctype="multipart/form-data">

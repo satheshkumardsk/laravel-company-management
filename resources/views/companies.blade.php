@@ -1,7 +1,7 @@
 <html>
  <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Manage Company Data</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
@@ -11,11 +11,55 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
  </head>
  <body>
-  <div class="container">
-     <br />
-     <h3 align="center">Manage Company Data</h3>
-     <br />
 
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{route('home')}}">{{ config('app.name', 'Laravel') }}</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="{{route('employees.index')}}">Employees</a></li>
+              <li><a href="{{route('companies.index')}}">Companies</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{route('home')}}">Home</a></li>
+              <li>  <a class="dropdown-item" href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+               {{ __('Logout') }}
+           </a></li>
+
+           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+               @csrf
+           </form>
+            </ul>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+
+
+
+  <div class="container" >
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title text-center">Manage Company Data</h3>
+  </div>
+</div>
+
+     <div align="left">
         <form action="{{route('companies_data.export')}}" method="GET" enctype="multipart/form-data">
         @csrf
 
@@ -29,13 +73,13 @@
 
             <div class="form-group">
                 <input type="file" name="file" />
-
                 <button type="submit" class="btn btn-sm btn-primary">Import</button>
             </div>
        </form>
+     </div>
 
-     <div align="right">
-      <button type="button" name="create_record" id="create_record" class="btn btn-sm btn-success btn-sm">Create Record</button>
+     <div align="right" >
+      <button type="button" name="create_record" id="create_record" class="btn btn-sm btn-success">Create Record</button>
      </div>
      <br />
    <div class="table-responsive">
@@ -143,9 +187,6 @@
 
 
  </body>
-
-
-
 </html>
 
 <script>
