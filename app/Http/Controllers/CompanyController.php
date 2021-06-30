@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class CompanyController extends Controller
 {
@@ -13,7 +18,22 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return 'Company Index function';
+
+        if(request()->ajax())
+        {
+
+
+            return datatables()->of(Company::withCount('employees')->latest()->get())
+                    ->addColumn('action', function($data){
+                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-sm btn-primary btn-sm">Edit</button>';
+                        $button .= '&nbsp;&nbsp;';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-sm btn-danger btn-sm">Delete</button>';
+                        return $button;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('companies');
     }
 
     /**
@@ -34,7 +54,39 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'company_name'    =>  'required',
+            'company_email'     =>  'required',
+            'company_logo'         =>  'required|image|max:2048',
+            'company_website'     =>  'required',
+            'active_status'     =>  'required',
+
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $image = $request->file('company_logo');
+
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+
+        $image->move(public_path('images'), $new_name);
+
+        $form_data = array(
+            'company_name'        =>  $request->company_name,
+            'company_email'         =>  $request->company_email,
+            'company_logo'             =>  $new_name,
+            'company_website'         =>  $request->company_website,
+            'active_status'         =>  $request->active_status
+        );
+
+        Company::create($form_data);
+
+        return response()->json(['success' => 'Data Added successfully.']);
     }
 
     /**
@@ -56,7 +108,17 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax())
+        {
+            $data = Company::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
+    }
+
+    public function update(Request $request,$id)
+    {
+
+
     }
 
     /**
@@ -66,10 +128,59 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_data(Request $request)
     {
-        //
+        $image_name = $request->hidden_image;
+        $image = $request->file('company_logo');
+        if($image != '')
+        {
+            $rules = array(
+                'company_name'    =>  'required',
+                'company_email'     =>  'required',
+                'company_logo'         =>  'image|max:2048',
+                'company_website'     =>  'required',
+                'active_status'     =>  'required',
+            );
+            $error = Validator::make($request->all(), $rules);
+            if($error->fails())
+            {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+
+            $image_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $image_name);
+        }
+        else
+        {
+            $rules = array(
+                'company_name'    =>  'required',
+                'company_email'     =>  'required',
+                'company_website'     =>  'required',
+                'active_status'     =>  'required',
+            );
+
+            $error = Validator::make($request->all(), $rules);
+
+            if($error->fails())
+            {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+        }
+
+        $form_data = array(
+            'company_name'        =>  $request->company_name,
+            'company_email'         =>  $request->company_email,
+            'company_logo'             =>  $image_name,
+            'company_website'         =>  $request->company_website,
+            'active_status'         =>  $request->active_status
+        );
+        Company::whereId($request->hidden_id)->update($form_data);
+
+        return response()->json(['success' => 'Data is successfully updated']);
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +190,13 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
     }
+
+    public function destroy_data($id)
+    {
+        $data = Company::findOrFail($id);
+        $data->delete();
+    }
+
+
 }

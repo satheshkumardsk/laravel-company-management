@@ -23,3 +23,19 @@
     </div>
 </div>
 @endsection
+
+{{-- <script>
+    window.onload = function() {
+    if (window.jQuery) {
+        // jQuery is loaded
+        console.log("Jquery works!");
+    } else {
+        // jQuery is not loaded
+        console.log("Jquery doesn't works!");
+    }
+
+    var resp = $.ajax({});
+
+    console.log('resp',resp);
+}
+</script> --}}
