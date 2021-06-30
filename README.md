@@ -1,3 +1,11 @@
+Need to enable a PHP extension if composer install fails
+
+Need to run php artisan queue:work inorder for the excel import option to work, After running the queue refresh the page
+
+Have used datatable jquery plugin to display the tables
+
+Pls make sure you enter the correct values in the excel while importing
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
