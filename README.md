@@ -18,6 +18,8 @@
 
 <li>Run PHP artisan serve</li>
 
+<li>username:admin@admin.com password:admin@test2</li>
+
 <li>Need to run php artisan queue:work inorder for the excel import option to work, After running the queue refresh the page</li>
 
 
