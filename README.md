@@ -1,10 +1,28 @@
-Need to enable a PHP extension if composer install fails
+<ol>
 
-Need to run php artisan queue:work inorder for the excel import option to work, After running the queue refresh the page
+<li>Have used Xampp server, PHP 8.0, Laravel 8.0, Node version 14 for development purpose</li>
 
-Have used datatable jquery plugin to display the tables
+<li>After cloning the project create .env and copy paste the contents of .env.example file</li>
 
-Pls make sure you enter the correct values in the excel while importing
+<li>Create the database connections as mentioned in .env file</li>
+
+<li>Need to enable a PHP GD extension inside the php.ini file if composer install fails , just uncomment extension=gd</li>
+
+<li>run php artisan key:generate , run composer install, npm install, npm run dev</li>
+
+<li>Need to enable a PHP GD extension inside the php.ini file if composer install fails</li>
+
+<li>Run PHP artisan migrate:refresh --seed</li>
+
+<li>Need to run php artisan queue:work inorder for the excel import option to work, After running the queue refresh the page</li>
+
+<li>Have used datatable jquery plugin to display the tables</li>
+
+<li>Pls make sure you enter the correct values in the excel while importing, Validation is given only to manual created entries , for excel imported entries pls mentioned 'NA' in the cells which are left empty</li>
+
+<li>Pls make sure you enter the correct values in the excel while importing, Validation is given only to manual created entries , for excel imported entries pls mentioned 'NA' in the cells which are left empty</li>
+
+</ol>
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
