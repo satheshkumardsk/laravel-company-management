@@ -55,13 +55,13 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'first_name'    =>  'required',
-            'last_name'     =>  'required',
+            'first_name'    =>  'required|max:255',
+            'last_name'     =>  'required|max:255',
             'company_id'         =>  'required',
-            'email'     =>  'required',
-            'phone'         =>  'required',
-            'designation'     =>  'required',
-            'active_status'     =>  'required',
+            'email'     =>  'max:255',
+            'phone'         =>  'max:20',
+            'designation'     =>  'max:255',
+            //'active_status'     =>  'required',
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -78,7 +78,7 @@ class EmployeeController extends Controller
             'email'         =>  $request->email,
             'phone'         =>  $request->phone,
             'designation'   =>  $request->designation,
-            'active_status' =>  $request->active_status
+            'active_status' =>  $request->active_status ? $request->active_status : '1'
         );
 
         Employee::create($form_data);
@@ -128,13 +128,13 @@ class EmployeeController extends Controller
     public function update_data(Request $request)
     {
             $rules = array(
-                'first_name'    =>  'required',
-                'last_name'     =>  'required',
+                'first_name'    =>  'required|max:255',
+                'last_name'     =>  'required|max:255',
                 'company_id'         =>  'required',
-                'email'     =>  'required',
-                'phone'         =>  'required',
-                'designation'     =>  'required',
-                'active_status'     =>  'required',
+                'email'     =>  'max:255',
+                'phone'         =>  'max:20',
+                'designation'     =>  'max:255',
+                //'active_status'     =>  'required',
             );
 
             $error = Validator::make($request->all(), $rules);
@@ -152,7 +152,7 @@ class EmployeeController extends Controller
             'email'         =>  $request->email,
             'phone'         =>  $request->phone,
             'designation'   =>  $request->designation,
-            'active_status' =>  $request->active_status
+            'active_status' =>  $request->active_status ? $request->active_status : '1'
         );
         Employee::whereId($request->hidden_id)->update($form_data);
 

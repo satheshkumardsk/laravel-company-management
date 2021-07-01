@@ -55,11 +55,11 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'company_name'    =>  'required',
-            'company_email'     =>  'required',
-            'company_logo'         =>  'required|image|max:2048',
-            'company_website'     =>  'required',
-            'active_status'     =>  'required',
+            'company_name'    =>  'required|max:255',
+            'company_email'     =>  'max:255',
+            'company_logo'         =>  'image|max:2000|dimensions:min_width=100,min_height=100',
+            'company_website'     =>  'max:255',
+            //'active_status'     =>  'required',
 
         );
 
@@ -70,18 +70,22 @@ class CompanyController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
+        $new_name ='';
+
+if($request->file('company_logo')){
         $image = $request->file('company_logo');
 
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
 
         $image->move(public_path('images'), $new_name);
+    }
 
         $form_data = array(
             'company_name'        =>  $request->company_name,
             'company_email'         =>  $request->company_email,
             'company_logo'             =>  $new_name,
             'company_website'         =>  $request->company_website,
-            'active_status'         =>  $request->active_status
+            'active_status'         =>  $request->active_status ? $request->active_status : '1'
         );
 
         Company::create($form_data);
@@ -135,11 +139,11 @@ class CompanyController extends Controller
         if($image != '')
         {
             $rules = array(
-                'company_name'    =>  'required',
-                'company_email'     =>  'required',
-                'company_logo'         =>  'image|max:2048',
-                'company_website'     =>  'required',
-                'active_status'     =>  'required',
+                'company_name'    =>  'required|max:255',
+                'company_email'     =>  'max:255',
+                'company_logo'         =>  'image|max:2000|dimensions:min_width=100,min_height=100',
+                'company_website'     =>  'max:255',
+                //'active_status'     =>  'required',
             );
             $error = Validator::make($request->all(), $rules);
             if($error->fails())
@@ -153,10 +157,10 @@ class CompanyController extends Controller
         else
         {
             $rules = array(
-                'company_name'    =>  'required',
-                'company_email'     =>  'required',
-                'company_website'     =>  'required',
-                'active_status'     =>  'required',
+                'company_name'    =>  'required|max:255',
+                'company_email'     =>  'max:255',
+                'company_website'     =>  'max:255',
+                //'active_status'     =>  'required',
             );
 
             $error = Validator::make($request->all(), $rules);
@@ -172,7 +176,7 @@ class CompanyController extends Controller
             'company_email'         =>  $request->company_email,
             'company_logo'             =>  $image_name,
             'company_website'         =>  $request->company_website,
-            'active_status'         =>  $request->active_status
+            'active_status'         =>  $request->active_status ? $request->active_status : '1'
         );
         Company::whereId($request->hidden_id)->update($form_data);
 

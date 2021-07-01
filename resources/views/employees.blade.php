@@ -166,7 +166,7 @@
                 <label class="control-label col-md-4" >Status : </label>
                 <div class="col-md-8">
                     <input type="radio" id="activeStatus" name="active_status" value=1>Active
-                    <input type="radio" id="inActiveStatus" name="active_status" value=0 >Inactive
+                    <input type="radio" id="inActiveStatus" name="active_status" value=2 >Inactive
                 </div>
                </div>
 
@@ -253,7 +253,16 @@
     name: 'action',
     orderable: false
    }
-  ]
+  ],
+
+  rowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+      if(aData.active_status == 1){
+        $('td:eq(6)', nRow).html( 'Active' );
+      }else{
+        $('td:eq(6)', nRow).html( 'InActive' );
+      }
+
+  }
  });
 
 

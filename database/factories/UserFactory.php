@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'name' => 'Admin',
             'email' =>  'admin@admin.com',
             'email_verified_at' => now(),
-            'password' => Hash::make(12345678), // password
+            'password' => Hash::make('admin@test2'), // password
             'remember_token' => Str::random(10),
         ];
     }
