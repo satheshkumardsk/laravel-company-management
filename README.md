@@ -12,15 +12,18 @@
 
 <li>Need to enable a PHP GD extension inside the php.ini file if composer install fails</li>
 
+<li>Run PHP artisan optimize:clear to clear all the cache</li>
+
 <li>Run PHP artisan migrate:refresh --seed</li>
+
+<li>Run PHP artisan serve</li>
 
 <li>Need to run php artisan queue:work inorder for the excel import option to work, After running the queue refresh the page</li>
 
-<li>Have used datatable jquery plugin to display the tables</li>
+
 
 <li>Pls make sure you enter the correct values in the excel while importing, Validation is given only to manual created entries , for excel imported entries pls mentioned 'NA' in the cells which are left empty</li>
 
-<li>Pls make sure you enter the correct values in the excel while importing, Validation is given only to manual created entries , for excel imported entries pls mentioned 'NA' in the cells which are left empty</li>
 
 </ol>
 
